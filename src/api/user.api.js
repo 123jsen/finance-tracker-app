@@ -6,16 +6,16 @@ const router = express.Router();
 router.use(express.json());
 
 const User = require('../models/user.model.js');
+const Token = require('../models/token.model.js');
 
 // salt parameter for bcrypt
 const saltRounds = 10;
 
 // Create a new user
-router.post('/', (req, res) => {
+router.post('/create', (req, res) => {
   console.log(req.body);
 
-  const name = req.body.name;
-  const password = req.body.password;
+  const { name, password } = req.body;
 
   bcrypt.hash(password, saltRounds, async (err, hash) => {
     if (err) {
@@ -45,9 +45,8 @@ router.post('/', (req, res) => {
 });
 
 // check if user credentials are correct
-router.get('/:username/:password', async (req, res) => {
-  const name = req.params.username;
-  const password = req.params.password;
+router.post('/login', async (req, res) => {
+  const { name, password } = req.body;
 
   const user = await User.findOne({ name });
 
@@ -70,7 +69,16 @@ router.get('/:username/:password', async (req, res) => {
       return;
     }
 
-    res.send(`Correct login for user ${name}`);
+    // Credentials Correct, create token for the user
+    const token = Token.generateStr();
+
+    Token.create({
+      user,
+      token,
+      createDate: new Date(),
+    });
+
+    res.send({ name, token });
   });
 });
 
