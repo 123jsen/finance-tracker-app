@@ -8,6 +8,7 @@ const cors = require('cors');
 const stockRouter = require('./api/stock.api.js');
 const userRouter = require('./api/user.api.js');
 const log = require('./log.js');
+const auth = require('./authenticate.js');
 
 const app = express();
 
@@ -24,15 +25,20 @@ db.once('open', function () {
 
   app.use(cors());
 
-  // middleware for parsing json
+  // Middleware for parsing json
   app.use(express.json());
 
   // Middleware for logging requests
   app.use(log);
 
+  // User Login API
+  app.use('/user', userRouter);
+
+  // Middleware for verifying user identity
+  app.use(auth);
+
   // Other Express APIs
   app.use('/stock', stockRouter);
-  app.use('/user', userRouter);
 });
 
 const server = app.listen(process.env.PORT || 3000);
