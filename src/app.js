@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 // Imports from other files
-const stockRouter = require('./stocks.js');
+const stockRouter = require('./api/stock.api.js');
+const userRouter = require('./api/user.api.js');
 const log = require('./log.js');
 
 const app = express();
@@ -27,6 +28,7 @@ db.once('open', function () {
 
   // Other Express APIs
   app.use('/stock', stockRouter);
+  app.use('/user', userRouter);
 });
 
 const server = app.listen(process.env.PORT || 3000);
