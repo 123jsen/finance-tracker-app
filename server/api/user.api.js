@@ -2,9 +2,6 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
 
-// middleware for parsing json
-router.use(express.json());
-
 const User = require('../models/user.model.js');
 const Token = require('../models/token.model.js');
 

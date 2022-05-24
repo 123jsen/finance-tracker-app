@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const cors = require('cors');
 
 // Imports from other files
 const stockRouter = require('./api/stock.api.js');
@@ -20,11 +21,14 @@ db.on('error', console.error.bind(console, 'connection error'));
 
 db.once('open', function () {
   console.log('app.js: Start Server');
+
+  app.use(cors());
+
+  // middleware for parsing json
+  app.use(express.json());
+
   // Middleware for logging requests
   app.use(log);
-
-  // Serve public folder
-  app.use(express.static('public'));
 
   // Other Express APIs
   app.use('/stock', stockRouter);

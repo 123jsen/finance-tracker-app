@@ -3,5 +3,6 @@ module.exports = (req, res, next) => {
   console.log('Time:', new Date());
   console.log('Method:', req.method);
   console.log('URL:', req.originalUrl);
+  console.log('Body: ', req.body);
   next();
 };
