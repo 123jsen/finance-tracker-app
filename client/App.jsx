@@ -1,41 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import LoginForm from './components/Login.jsx';
+import LoginContext from './context/LoginContext.jsx';
 import Main from './components/Main.jsx';
 
 export default function App() {
-
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
+  const { checkLogin } = useContext(LoginContext);
 
   useEffect(() => {
-    async function fetchToken() {
-      const name = localStorage.getItem('name');
-      const token = localStorage.getItem('token');
+    const verify = async () => {
+      setLogin(await checkLogin())
+    }
 
-      if (name == null || token == null) {
-        setLogin(false);
-      }
-
-      const res = await fetch('http://localhost:3000', {
-        headers: {
-          Authorization: token,
-          'Content-Type': 'application/json',
-          name
-        }
-      });
-
-      if (res.status == 400) {
-        console.log(await res.text());
-        setLogin(false);
-      }
-    };
-
-    fetchToken();
+    verify();
   })
 
-  return (
-    <>
-      {login && <Main />}
-      {!login && <LoginForm />}
-    </>
-  )
+  return login ? <Main /> : <LoginForm />;
 }
