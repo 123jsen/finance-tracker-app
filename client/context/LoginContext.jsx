@@ -29,6 +29,7 @@ export const LoginProvider = ({ children }) => {
 
     if (res.status == 400) {
       console.log(await res.text());
+      localStorage.clear();
       return false;
     }
 
