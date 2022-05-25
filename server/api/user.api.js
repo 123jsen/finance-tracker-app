@@ -10,8 +10,6 @@ const saltRounds = 10;
 
 // Create a new user
 router.post('/create', (req, res) => {
-  console.log(req.body);
-
   const { name, password } = req.body;
 
   bcrypt.hash(password, saltRounds, async (err, hash) => {
@@ -22,13 +20,22 @@ router.post('/create', (req, res) => {
     }
 
     try {
-      await User.create({
+      const user = await User.create({
         name,
         password: hash,
       });
 
       console.log(`User ${name} created`);
-      res.sendStatus(201);
+
+      const token = Token.generateStr();
+
+      Token.create({
+        user,
+        token,
+        createDate: new Date(),
+      });
+
+      res.status(201).send({ name, token });
     } catch (err) {
       // Handle error e.g. duplicate error
       console.log(err);
