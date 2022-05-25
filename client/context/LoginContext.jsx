@@ -12,6 +12,8 @@ export const LoginProvider = ({ children }) => {
     setName(localStorage.getItem('name'));
     setToken(localStorage.getItem('token'));
 
+    console.log('Check Login');
+
     if (name == null || token == null) {
       return false;
     }

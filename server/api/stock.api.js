@@ -4,6 +4,21 @@ const router = express.Router();
 
 const Stock = require('../models/stock.model.js');
 
+// Queries all stock history of the user
+router.get('/', async (req, res) => {
+  const { user } = req;
+
+  // Replace keys with DB entries
+  try {
+    await user.populate('pastHistory');
+
+    res.send(user.pastHistory);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err.message);
+  }
+});
+
 // This queries stock prices for a given ticker symbol
 router.get('/:symbol', async (req, res) => {
   const { symbol } = req.params;
@@ -27,14 +42,14 @@ router.post('/:symbol', async (req, res) => {
     user.pastHistory.push(stock.id);
     user.save();
 
-    res.sendStatus(200);
+    res.status(200).send(`Added record for ${symbol}`);
   } catch (err) {
     console.log(err);
     res.status(500).send(err.message);
   }
 });
 
-// Delete a
+// Delete a stock entry
 router.delete('/', async (req, res) => {});
 
 module.exports = router;
