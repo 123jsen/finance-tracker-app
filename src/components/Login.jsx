@@ -6,8 +6,6 @@ export default function LoginForm() {
 
   const { register, handleSubmit } = useForm();
   const onSubmit = async (data) => {
-    console.log(JSON.stringify(data));
-
     const res = await fetch('http://localhost:3000/user/login', {
       method: 'POST',
       headers: {
@@ -28,6 +26,9 @@ export default function LoginForm() {
       localStorage.clear();
       localStorage.setItem('name', name);
       localStorage.setItem('token', token);
+
+      // Reload Page
+      window.location.reload();
     }
   }
 
@@ -42,7 +43,7 @@ export default function LoginForm() {
         <input {...register("password")} id='pass' type='password' name='password' />
         <br />
         <input type='submit' value='Login' />
-        {!success && <p>Invalid Login</p>}
+        {!success && <p style={{ color: "red" }}>Invalid Login</p>}
       </form>
     </>
   );

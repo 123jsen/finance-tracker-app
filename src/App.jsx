@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import LoginForm from './pages/Login.jsx';
-import Main from './pages/Main.jsx';
+import LoginForm from './components/Login.jsx';
+import Main from './components/Main.jsx';
 
 export default function App() {
 
@@ -22,6 +22,11 @@ export default function App() {
           name
         }
       });
+
+      if (res.status == 400) {
+        console.log(await res.text());
+        setLogin(false);
+      }
     };
 
     fetchToken();

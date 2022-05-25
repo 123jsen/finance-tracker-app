@@ -9,13 +9,13 @@ module.exports = async (req, res, next) => {
   // Verify Token
   if (tokenRecord == null) {
     console.log('No token provided');
-    res.sendStatus(400);
+    res.status(400).send('No token provided');
     return;
   }
 
   if (tokenRecord.user.name != name) {
     console.log('Token not matching user');
-    res.sendStatus(400);
+    res.status(400).send('Incorrect Token');
     return;
   }
 
