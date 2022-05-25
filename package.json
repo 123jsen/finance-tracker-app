@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "dev": "concurrently \"webpack serve  --hot --open --mode development\" \"nodemon server/app.js\"",
+    "client": "webpack serve  --hot --open --mode development",
+    "server": "nodemon server/app.js",
+    "dev": "concurrently \"yarn client\" \"yarn server\"",
     "build": "webpack --config webpack.config.js --mode production"
   },
   "repository": "https://github.com/123jsen/finance-tracker-app.git",
