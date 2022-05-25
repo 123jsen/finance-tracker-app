@@ -1,4 +1,5 @@
 import React from 'react';
+import StocksTable from './StocksTable.jsx'
 
 function LogoutButton() {
 
@@ -15,9 +16,10 @@ function LogoutButton() {
 
 export default function Main() {
   return (
-    <div>
+    <>
       <h1>Finance Tracker App</h1>
       <LogoutButton />
-    </div>
+      <StocksTable />
+    </>
   )
 };

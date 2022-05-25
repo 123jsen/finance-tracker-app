@@ -36,11 +36,11 @@ export default function LoginForm() {
     <>
       <h1>Login</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label for='name'>Username:</label>
-        <input {...register("name")} id='name' type='text' name='name' />
+        <label>Username:</label>
+        <input {...register("name")} type='text' />
         <br />
-        <label for='pass'>Password:</label>
-        <input {...register("password")} id='pass' type='password' name='password' />
+        <label>Password:</label>
+        <input {...register("password")} type='password' />
         <br />
         <input type='submit' value='Login' />
         {!success && <p style={{ color: "red" }}>Invalid Login</p>}
