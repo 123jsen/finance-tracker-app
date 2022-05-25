@@ -5,21 +5,58 @@ export default function StocksTable() {
 
   const { name, token } = useContext(LoginContext);
   const [stockData, setStockData] = useState([]);
+  const [lastUpdated, setLastUpdated] = useState(new Date());
+
+  const fetchAllStockPrice = async (data) => {
+    console.log("Updating Prices")
+
+    const requests = [];
+    data.forEach((stock) => {
+      requests.push(
+        fetch('http://localhost:3000/stock/' + stock.symbol, {
+          headers: {
+            Authorization: token,
+            name
+          }
+        })
+          .then((res) => res.json())
+      )
+    });
+
+    const responses = await Promise.all(requests);
+
+    for (let i = 0; i < data.length; i++) {
+      data[i].currentPrice = responses[i].regularMarketPrice;
+    }
+
+    // change the ref to re-render
+    const newData = data.slice();
+
+    setStockData(newData);
+    setLastUpdated(new Date());
+  }
+
+  // async function for fetching stock data
+  async function fetchStockData() {
+
+    const res = await fetch('http://localhost:3000/stock', {
+      headers: {
+        Authorization: token,
+        name
+      }
+    });
+
+    const data = await res.json();
+    fetchAllStockPrice(data);
+
+    // Set regular update to stock prices
+
+    setInterval(() => fetchAllStockPrice(data), 5000);
+
+  };
+
 
   useEffect(() => {
-    // async function for fetching token
-    async function fetchStockData() {
-
-      const res = await fetch('http://localhost:3000/stock', {
-        headers: {
-          Authorization: token,
-          name
-        }
-      });
-
-      setStockData(await res.json());
-    };
-
     // call async function
     fetchStockData();
   }, [])
@@ -33,7 +70,9 @@ export default function StocksTable() {
       return (
         <tr key={stock._id}>
           <td>{stock.symbol}</td>
-          <td>${stock.buyPrice}</td>
+          <td>${stock.buyPrice.toFixed(2)}</td>
+          <td>${stock.currentPrice.toFixed(2)}</td>
+          <td>${(stock.buyPrice - stock.currentPrice).toFixed(2)}</td>
           <td>{stock.buyDate}</td>
         </tr>
       )
@@ -47,6 +86,8 @@ export default function StocksTable() {
           <tr>
             <th>Stock</th>
             <th>Buy Price</th>
+            <th>Current Price</th>
+            <th>Net Gain/Loss</th>
             <th>Buy Date</th>
           </tr>
         </thead>
@@ -54,6 +95,9 @@ export default function StocksTable() {
           {tableRows}
         </tbody>
       </table>
+      <p>
+        Last Updated at {lastUpdated.toString()}
+      </p>
     </>
   )
 };
