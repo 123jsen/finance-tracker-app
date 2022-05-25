@@ -15,7 +15,24 @@ router.get('/:symbol', async (req, res) => {
 });
 
 // Create a stock entry
-router.post('/', async (req, res) => {});
+router.post('/:symbol', async (req, res) => {
+  const { symbol } = req.params;
+  const { buyPrice, buyDate } = req.body;
+  const { user } = req;
+
+  try {
+    const stock = await Stock.create({ symbol, buyPrice, buyDate });
+
+    // Update User
+    user.pastHistory.push(stock.id);
+    user.save();
+
+    res.sendStatus(200);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err.message);
+  }
+});
 
 // Delete a
 router.delete('/', async (req, res) => {});

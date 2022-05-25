@@ -19,5 +19,8 @@ module.exports = async (req, res, next) => {
     return;
   }
 
+  // Add User Information to Request
+  req.user = tokenRecord.user;
+
   next();
 };

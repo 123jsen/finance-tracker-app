@@ -53,6 +53,7 @@ router.post('/login', async (req, res) => {
     return;
   }
 
+  // Encrypt the password
   bcrypt.compare(password, user.password, function (err, result) {
     if (err) {
       res.sendStatus(500);
