@@ -5,7 +5,7 @@ export default function StocksTable() {
 
   const { name, token } = useContext(LoginContext);
   const [stockData, setStockData] = useState([]);
-  const [lastUpdated, setLastUpdated] = useState(new Date());
+  const [lastUpdated, setLastUpdated] = useState();
 
   const fetchAllStockPrice = async (data) => {
     console.log("Updating Prices")
@@ -33,7 +33,9 @@ export default function StocksTable() {
     const newData = data.slice();
 
     setStockData(newData);
-    setLastUpdated(new Date());
+
+    if (newData.length > 0)
+      setLastUpdated(new Date());
   }
 
   // async function for fetching stock data
@@ -72,7 +74,7 @@ export default function StocksTable() {
           <td>{stock.symbol}</td>
           <td>${stock.buyPrice.toFixed(2)}</td>
           <td>${stock.currentPrice.toFixed(2)}</td>
-          <td>${(stock.buyPrice - stock.currentPrice).toFixed(2)}</td>
+          <td>${(stock.currentPrice - stock.buyPrice).toFixed(2)}</td>
           <td>{stock.buyDate}</td>
         </tr>
       )
@@ -95,9 +97,7 @@ export default function StocksTable() {
           {tableRows}
         </tbody>
       </table>
-      <p>
-        Last Updated at {lastUpdated.toString()}
-      </p>
+      {lastUpdated && <p> Last Updated at {lastUpdated.toString()} </p>}
     </>
   )
 };
