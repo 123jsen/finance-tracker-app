@@ -1,13 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import LoginContext from '../context/LoginContext.jsx';
 
 export default function StocksAddform() {
 
   const { name, token } = useContext(LoginContext);
+  const [message, setMessage] = useState();
+  const [error, setError] = useState(false);
   const { register, handleSubmit } = useForm();
-  const onSubmit = async (data) => {
 
+  const onSubmit = async (data) => {
     const res = await fetch('http://localhost:3000/stock/' + data.symbol, {
       method: 'POST',
       headers: {
@@ -21,20 +23,30 @@ export default function StocksAddform() {
       })
     });
 
-    if (res.status != 200) {
-      console.log(res.text());
+    if (res.status == 404) {
+      setMessage(await res.text());
+      setError(true);
+      return;
     }
+
+    setMessage('Stock is added');
+    setError(false);
+
+    // Stock is okay, reload form
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>Ticker Symbol:</label>
-      <input {...register("symbol")} type='text' />
-      <br />
-      <label>Price:</label>
-      <input {...register("price")} type='text' />
-      <br />
-      <input type="submit" value="Add Stock"></input>
-    </form>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label>Ticker Symbol:</label>
+        <input {...register("symbol")} type='text' />
+        <br />
+        <label>Price:</label>
+        <input {...register("price")} type='text' />
+        <br />
+        <input type="submit" value="Add Stock"></input>
+      </form>
+      {message != null && <p className={error ? "error" : ""}>{message}</p>}
+    </>
   )
 };

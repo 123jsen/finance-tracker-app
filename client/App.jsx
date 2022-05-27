@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import LoginForm from './components/Login.jsx';
 import LoginContext from './context/LoginContext.jsx';
 import Main from './components/Main.jsx';
+import './App.css';
 
 export default function App() {
   const [login, setLogin] = useState(null);

@@ -89,7 +89,7 @@ export default function LoginForm() {
         <br />
         <input type='submit' value='Login' onClick={handleSubmit(handleLogin)} />
         <input type='submit' value='Register' onClick={handleSubmit(handleRegister)} />
-        {!success && <p style={{ color: "red" }}>{error}</p>}
+        {!success && <p className={error ? "error" : ""}>{error}</p>}
       </form>
     </>
   );

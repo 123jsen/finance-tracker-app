@@ -34,6 +34,14 @@ router.post('/:symbol', async (req, res) => {
   const { symbol } = req.params;
   const { buyPrice, buyDate } = req.body;
   const { user } = req;
+  
+  // First check if symbol is correct
+  const quote = await yahooFinance.quote(symbol);
+  if (quote == null) {
+    console.log('Stock is not found');
+    res.status(404).send('Stock is not found');
+    return;
+  }
 
   try {
     const stock = await Stock.create({ symbol, buyPrice, buyDate });
