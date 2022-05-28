@@ -20,6 +20,8 @@ function StockRow(props) {
     else {
       console.log(await res.text());
     }
+
+    props.reloadStock();
   }
 
   return (
@@ -43,7 +45,7 @@ export default function StocksTable(props) {
       return;
     }
     else
-      return <StockRow stock={stock}/>
+      return <StockRow stock={stock} reloadStock={props.reloadStock}/>
   });;
 
   useEffect(() => {
@@ -52,7 +54,6 @@ export default function StocksTable(props) {
 
   return (
     <>
-      <h2>Stocks</h2>
       <table>
         <thead>
           <tr>

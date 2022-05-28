@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function LoginForm() {
-  const [success, setSuccess] = useState(true);
-  const [error, setError] = useState('Invalid Login');
+  const [error, setError] = useState();
 
   const { register, handleSubmit } = useForm();
-  const handleLogin = async (data) => {
+  
+  const accountHandler = async (data, URI, acceptStatus) => {
     try {
-      const res = await fetch('http://localhost:3000/user/login', {
+      const res = await fetch(URI, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -16,13 +16,11 @@ export default function LoginForm() {
         body: JSON.stringify(data)
       });
 
-      if (res.status !== 200) {
-        setSuccess(false);
-        setError('Invalid Login');
+      // 200 for accept login, 201 for account created
+      if (res.status !== acceptStatus) {
+        setError(await res.text());
       }
       else {
-        setSuccess(true);
-
         const { name, token } = await res.json();
 
         // Register Tokens in local storage
@@ -35,46 +33,17 @@ export default function LoginForm() {
       }
     } catch (err) {
       console.log(err.message);
-      setSuccess(false);
       setError('Error occurred with Server');
       return;
     }
   }
 
+  const handleLogin = async (data) => {
+    await accountHandler(data, 'http://localhost:3000/user/login', 200);
+  }
+
   const handleRegister = async (data) => {
-    try {
-      const res = await fetch('http://localhost:3000/user/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-
-      if (res.status !== 201) {
-        setSuccess(false);
-        setError(await res.text());
-      }
-      else {
-        setSuccess(true);
-
-        const { name, token } = await res.json();
-
-        // Register Tokens in local storage
-        localStorage.clear();
-        localStorage.setItem('name', name);
-        localStorage.setItem('token', token);
-
-        // Reload Page
-        window.location.reload();
-      }
-    }
-    catch (err) {
-      console.log(err.message);
-      setSuccess(false);
-      setError('Error occurred with Server');
-      return;
-    }
+    await accountHandler(data, 'http://localhost:3000/user/create', 201);
   }
 
   return (
@@ -89,7 +58,7 @@ export default function LoginForm() {
         <br />
         <input type='submit' value='Login' onClick={handleSubmit(handleLogin)} />
         <input type='submit' value='Register' onClick={handleSubmit(handleRegister)} />
-        {!success && <p className={error ? "error" : ""}>{error}</p>}
+        {error != null && <p className={error ? "error" : ""}>{error}</p>}
       </form>
     </>
   );

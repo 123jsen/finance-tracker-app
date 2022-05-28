@@ -12,6 +12,18 @@ const saltRounds = 10;
 router.post('/create', (req, res) => {
   const { name, password } = req.body;
 
+  if (!name) {
+    res.status(400).send('Username Cannot be Empty');
+    console.log(`User ${name} not found in DB`);
+    return;
+  }
+
+  if (!password) {
+    res.status(400).send('Password Cannot be Empty');
+    console.log(`User ${name} not found in DB`);
+    return;
+  }
+
   bcrypt.hash(password, saltRounds, async (err, hash) => {
     if (err) {
       res.sendStatus(500);
@@ -55,7 +67,7 @@ router.post('/login', async (req, res) => {
   const user = await User.findOne({ name });
 
   if (user == null) {
-    res.sendStatus(404);
+    res.status(404).send('Incorrect Login Credentials');
     console.log(`User ${name} not found in DB`);
     return;
   }
@@ -69,7 +81,7 @@ router.post('/login', async (req, res) => {
     }
 
     if (!result) {
-      res.sendStatus(404);
+      res.status(404).send('Incorrect Login Credentials');
       console.log(`Incorrect password for user ${name}`);
       return;
     }
