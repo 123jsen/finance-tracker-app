@@ -12,7 +12,9 @@ router.get('/', async (req, res) => {
   try {
     await user.populate('pastHistory');
 
-    res.send(user.pastHistory);
+    const { pastHistory } = user;
+
+    res.send(pastHistory);
   } catch (err) {
     console.log(err);
     res.status(500).send(err.message);
@@ -34,7 +36,7 @@ router.post('/:symbol', async (req, res) => {
   const { symbol } = req.params;
   const { buyPrice, buyDate } = req.body;
   const { user } = req;
-  
+
   // First check if symbol is correct
   const quote = await yahooFinance.quote(symbol);
   if (quote == null) {

@@ -2,12 +2,13 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import LoginContext from '../context/LoginContext.jsx';
 
-export default function StocksAddform() {
+export default function StocksAddform(props) {
 
   const { name, token } = useContext(LoginContext);
+  const { register, handleSubmit } = useForm();
+
   const [message, setMessage] = useState();
   const [error, setError] = useState(false);
-  const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
     const res = await fetch('http://localhost:3000/stock/' + data.symbol, {
@@ -33,6 +34,7 @@ export default function StocksAddform() {
     setError(false);
 
     // Stock is okay, reload form
+    props.reloadStock();
   }
 
   return (
