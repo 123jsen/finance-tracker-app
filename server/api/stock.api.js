@@ -60,6 +60,21 @@ router.post('/:symbol', async (req, res) => {
 });
 
 // Delete a stock entry
-router.delete('/', async (req, res) => {});
+router.delete('/:id', async (req, res) => {
+  const {id} = req.params;
+  const stock = await Stock.findOne({id});
+
+  // TODO: CHECK IF STOCK BELONGS TO THAT USER
+  // TODO: REMOVE STOCK FROM USER'S LIST
+
+  if (stock == null) {  
+    res.sendStatus(404);
+    return;
+  }
+
+  Stock.deleteOne({id}).exec();
+
+  res.sendStatus(204);
+});
 
 module.exports = router;

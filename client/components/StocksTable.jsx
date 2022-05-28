@@ -1,4 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import LoginContext from '../context/LoginContext.jsx';  
+
+function StockRow(props) {
+  const { name, token } = useContext(LoginContext);
+  const { stock } = props;
+
+  const deleteStock = async () => {
+    const res = await fetch('http://localhost:3000/stock/' + stock._id, {
+      method: 'DELETE',
+      headers: {
+        Authorization: token,
+        name
+      }
+    });
+
+    if (res.status == 204) {
+      console.log('Success');
+    }
+    else {
+      console.log(await res.text());
+    }
+  }
+
+  return (
+    <tr key={stock._id}>
+      <td>{stock.symbol}</td>
+      <td>${stock.buyPrice.toFixed(2)}</td>
+      <td>${stock.currentPrice.toFixed(2)}</td>
+      <td>${(stock.currentPrice - stock.buyPrice).toFixed(2)}</td>
+      <td>{stock.buyDate}</td>
+      <td><button onClick={deleteStock}>Delete</button></td>
+    </tr>
+  )
+}
 
 export default function StocksTable(props) {
   const [lastUpdated, setLastUpdated] = useState();
@@ -9,15 +43,7 @@ export default function StocksTable(props) {
       return;
     }
     else
-      return (
-        <tr key={stock._id}>
-          <td>{stock.symbol}</td>
-          <td>${stock.buyPrice.toFixed(2)}</td>
-          <td>${stock.currentPrice.toFixed(2)}</td>
-          <td>${(stock.currentPrice - stock.buyPrice).toFixed(2)}</td>
-          <td>{stock.buyDate}</td>
-        </tr>
-      )
+      return <StockRow stock={stock}/>
   });;
 
   useEffect(() => {
@@ -35,6 +61,7 @@ export default function StocksTable(props) {
             <th>Current Price</th>
             <th>Net Gain/Loss</th>
             <th>Buy Date</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>

@@ -71,7 +71,7 @@ export default function Main() {
     <>
       <h1>Finance Tracker App</h1>
       <LogoutButton />
-      <StocksTable stockData={stockData}/>
+      <StocksTable stockData={stockData} reloadStock={loadStock}/>
       <StocksAddform stockData={stockData} reloadStock={loadStock}/>
     </>
   )
