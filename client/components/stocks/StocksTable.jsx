@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import LoginContext from '../context/LoginContext.jsx';
+import LoginContext from '../../context/LoginContext.jsx';
 
 function StockRow({ stock, reloadStock }) {
   const { name, token } = useContext(LoginContext);

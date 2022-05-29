@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import LoginForm from './components/Login.jsx';
+import LoginForm from './components/LoginForm.jsx';
 import LoginContext from './context/LoginContext.jsx';
-import Stocks from './components/Stocks.jsx';
+import Main from './components/Main.jsx';
 import './App.css';
 
 export default function App() {
@@ -17,18 +17,16 @@ export default function App() {
     verify();
   }, [])
 
-  const NoLogin = () => {
-    return (
-      <>
-        {login === null ? <p>Loading</p> : <LoginForm />}
-      </>
-    )
-  }
+  const NoLogin = () => (
+    <>
+      {login === null ? <p>Loading</p> : <LoginForm />}
+    </>
+  )
 
 
   return (
     <>
-      {login ? <Stocks /> : <NoLogin />}
+      {login ? <Main /> : <NoLogin />}
     </>
   )
 }

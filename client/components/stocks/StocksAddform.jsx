@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import LoginContext from '../context/LoginContext.jsx';
+import LoginContext from '../../context/LoginContext.jsx';
 
 export default function StocksAddform({reloadStock}) {
 

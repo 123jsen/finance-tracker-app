@@ -1,20 +1,9 @@
 import React, { useEffect, useContext, useState } from 'react';
-import LoginContext from '../context/LoginContext.jsx';
+import LoginContext from '../../context/LoginContext.jsx';
 import StocksTable from './StocksTable.jsx';
 import StocksAddform from './StocksAddform.jsx';
 
-function LogoutButton() {
-  const { name, logout } = useContext(LoginContext);
-
-  return (
-    <>
-      <p>Currently Logged In: {name}</p>
-      <button onClick={logout}>Logout</button>
-    </>
-  )
-}
-
-export default function Main() {
+export default function Stocks() {
 
   const { name, token } = useContext(LoginContext);
   const [stockData, setStockData] = useState([]);
@@ -34,7 +23,7 @@ export default function Main() {
   };
 
   // update stock prices
-  const fetchStockPrices = async (data) => {
+  async function fetchStockPrices (data) {
     console.log("Updating Prices")
 
     const requests = [];
@@ -69,8 +58,6 @@ export default function Main() {
 
   return (
     <>
-      <h1>Finance Tracker App</h1>
-      <LogoutButton />
       <h2>Stocks</h2>
       <StocksTable stockData={stockData} reloadStock={loadStock}/>
       <StocksAddform stockData={stockData} reloadStock={loadStock}/>
