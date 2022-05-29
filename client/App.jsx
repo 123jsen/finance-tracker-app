@@ -9,12 +9,13 @@ export default function App() {
   const { checkLogin } = useContext(LoginContext);
 
   useEffect(() => {
+    console.log('Rendering App');
+
     const verify = async () => {
       setLogin(await checkLogin());
     }
-
     verify();
-  })
+  }, [])
 
   const NoLogin = () => {
     return (

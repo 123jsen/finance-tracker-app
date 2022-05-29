@@ -9,12 +9,15 @@ export const LoginProvider = ({ children }) => {
   const [token, setToken] = useState();
 
   async function checkLogin() {
-    setName(localStorage.getItem('name'));
-    setToken(localStorage.getItem('token'));
-
     console.log('Check Login');
 
-    if (name == null || token == null) {
+    if (name == null) {
+      console.log(`Name is: ${name}`);
+      return false;
+    }
+
+    if (token == null) {
+      console.log(`Token is: ${token}`);
       return false;
     }
 
@@ -40,6 +43,11 @@ export const LoginProvider = ({ children }) => {
     localStorage.clear();
     window.location.reload();
   }
+
+  useState(() => {
+    setName(localStorage.getItem('name'));
+    setToken(localStorage.getItem('token'));
+  }, []);
 
   return (
     <LoginContext.Provider value={{ checkLogin, logout, name, token }}>
