@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import LoginContext from '../context/LoginContext.jsx';  
+import LoginContext from '../context/LoginContext.jsx';
 
-function StockRow(props) {
+function StockRow({ stock, reloadStock }) {
   const { name, token } = useContext(LoginContext);
-  const { stock } = props;
 
   const deleteStock = async () => {
     const res = await fetch('http://localhost:3000/stock/' + stock._id, {
@@ -14,14 +13,13 @@ function StockRow(props) {
       }
     });
 
-    if (res.status == 204) {
+    if (res.status == 204)
       console.log('Success');
-    }
-    else {
+    else
       console.log(await res.text());
-    }
 
-    props.reloadStock();
+
+    reloadStock();
   }
 
   return (
@@ -36,21 +34,21 @@ function StockRow(props) {
   )
 }
 
-export default function StocksTable(props) {
+export default function StocksTable({ stockData, reloadStock }) {
   const [lastUpdated, setLastUpdated] = useState();
 
-  let tableRows = props.stockData.map((stock) => {
+  let tableRows = stockData.map((stock) => {
     if (stock == null) {
       console.log('No table data');
       return;
     }
     else
-      return <StockRow stock={stock} reloadStock={props.reloadStock}/>
+      return <StockRow stock={stock} reloadStock={reloadStock} />
   });;
 
   useEffect(() => {
     setLastUpdated(new Date());
-  }, [props.stockData]);
+  }, [stockData]);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import LoginForm from './components/Login.jsx';
 import LoginContext from './context/LoginContext.jsx';
-import Main from './components/Main.jsx';
+import Stocks from './components/Stocks.jsx';
 import './App.css';
 
 export default function App() {
@@ -28,7 +28,7 @@ export default function App() {
 
   return (
     <>
-      {login ? <Main /> : <NoLogin />}
+      {login ? <Stocks /> : <NoLogin />}
     </>
   )
 }

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import LoginContext from '../context/LoginContext.jsx';
 
-export default function StocksAddform(props) {
+export default function StocksAddform({reloadStock}) {
 
   const { name, token } = useContext(LoginContext);
   const { register, handleSubmit } = useForm();
@@ -34,7 +34,7 @@ export default function StocksAddform(props) {
     setError(false);
 
     // Stock is okay, reload form
-    props.reloadStock();
+    reloadStock();
   }
 
   return (
