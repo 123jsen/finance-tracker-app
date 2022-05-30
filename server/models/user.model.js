@@ -24,4 +24,15 @@ UserSchema.static('removeTokens', async function (user) {
   }
 });
 
+UserSchema.static('clearLogin', async function (user) {
+  // Latest token is tokens[0]
+  const tokens = await Token.find({ user });
+
+  if (tokens.length > 0) console.log(`Removing ${tokens.length} tokens`);
+
+  tokens.forEach((token) => {
+    Token.deleteOne({ _id: token._id }).exec();
+  });
+});
+
 module.exports = mongoose.model('User', UserSchema);

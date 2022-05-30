@@ -39,11 +39,11 @@ export default function LoginForm() {
   }
 
   const handleLogin = async (data) => {
-    await accountHandler(data, 'http://localhost:3000/user/login', 200);
+    await accountHandler(data, 'http://localhost:3000/login/login', 200);
   }
 
   const handleRegister = async (data) => {
-    await accountHandler(data, 'http://localhost:3000/user/create', 201);
+    await accountHandler(data, 'http://localhost:3000/login/create', 201);
   }
 
   return (

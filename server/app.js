@@ -7,6 +7,7 @@ const cors = require('cors');
 // Imports from other files
 const stockRouter = require('./api/stock.api.js');
 const userRouter = require('./api/user.api.js');
+const loginRouter = require('./api/login.api.js');
 const log = require('./log.js');
 const auth = require('./authenticate.js');
 
@@ -32,12 +33,13 @@ db.once('open', function () {
   app.use(log);
 
   // User Login API
-  app.use('/user', userRouter);
+  app.use('/login', loginRouter);
 
   // Middleware for verifying user identity
   app.use(auth);
 
   // Other Express APIs
+  app.use('/user', userRouter);
   app.use('/stock', stockRouter);
 });
 

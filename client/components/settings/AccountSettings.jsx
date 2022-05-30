@@ -1,19 +1,40 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import LoginContext from '../../context/LoginContext.jsx';
 
 export default function AccountSettings() {
 
-  const clearLogin = () => {
+  const { name, token } = useContext(LoginContext);
 
+  const deleteRequest = async (URI) => {
+    const res = await fetch(URI, {
+      method: 'DELETE',
+      headers: { Authorization: token, name }
+    });
+
+    if (res.status != 204) {
+      return;
+    }
+
+    localStorage.clear();
+    window.location.reload();
+  }
+
+  const clearLogins = () => {
+    console.log('Clear Logins');
+    deleteRequest('http://localhost:3000/user/tokens');
   }
 
   const deleteAccount = () => {
+    const confirmDelete = confirm('Are you sure you want to delete your account?');
+    if (!confirmDelete) return;
 
+    deleteRequest('http://localhost:3000/user/account');
   }
 
   return (
     <>
       <h3> Account Settings</h3>
-      <button onClick={clearLogin}>Clear Logins</button>
+      <button onClick={clearLogins}>Clear Logins</button>
       <br></br>
       <button onClick={deleteAccount}>Delete Account</button>
     </>
