@@ -10,9 +10,17 @@ router.delete('/tokens', (req, res) => {
 });
 
 router.delete('/account', async (req, res) => {
+  // No await because they are in another collection
+  User.deleteAllStocks(req.user);
   User.clearLogin(req.user);
-  // Also need to clear stock data
-  const user = User.deleteOne({ user: req.user }).exec();
+
+  const user = await User.findOne({ _id: req.user._id});
+  if (user == null) {
+    res.sendStatus(404);
+    return;
+  }
+
+  user.delete();
 
   res.sendStatus(204);
 });
