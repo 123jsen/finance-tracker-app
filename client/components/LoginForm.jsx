@@ -5,7 +5,7 @@ export default function LoginForm() {
   const [error, setError] = useState();
 
   const { register, handleSubmit } = useForm();
-  
+
   const accountHandler = async (data, URI, acceptStatus) => {
     try {
       const res = await fetch(URI, {
@@ -47,19 +47,21 @@ export default function LoginForm() {
   }
 
   return (
-    <>
-      <h1>Login</h1>
-      <form>
+    <div className="flex justify-center items-center h-screen">
+      <form className="bg-gray-800 px-10 py-6 rounded-xl">
+        <h1 className="text-center mb-5 text-2xl">Login</h1>
         <label>Username:</label>
-        <input {...register("name")} type='text' />
+        <input {...register("name")} type='text' className="form-input"/>
         <br />
         <label>Password:</label>
-        <input {...register("password")} type='password' />
+        <input {...register("password")} type='password' className="form-input"/>
         <br />
-        <input type='submit' value='Login' onClick={handleSubmit(handleLogin)} />
-        <input type='submit' value='Register' onClick={handleSubmit(handleRegister)} />
-        {error != null && <p className={error ? "error" : ""}>{error}</p>}
+        {error != null && <p className={error ? "text-red-600" : ""}>{error}</p>}
+        <div className="flex justify-around pt-4">
+          <input type='submit' value='Login' onClick={handleSubmit(handleLogin)} className="button"/>
+          <input type='submit' value='Register' onClick={handleSubmit(handleRegister)} className="button"/>
+        </div>
       </form>
-    </>
+    </div>
   );
 }

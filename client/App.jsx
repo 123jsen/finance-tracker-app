@@ -25,8 +25,9 @@ export default function App() {
 
 
   return (
-    <>
+    <div className="h-screen bg-slate-500 text-white text-lg">
       {login ? <Main /> : <NoLogin />}
-    </>
+    </div>
   )
 }
+
