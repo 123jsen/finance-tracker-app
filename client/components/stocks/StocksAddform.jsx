@@ -41,14 +41,14 @@ export default function StocksAddform({reloadStock}) {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label>Ticker Symbol:</label>
-        <input {...register("symbol")} type='text' />
+        <input {...register("symbol")} type='text' className="form-input"/>
         <br />
         <label>Price:</label>
-        <input {...register("price")} type='text' />
+        <input {...register("price")} type='text' className="form-input"/>
         <br />
-        <input type="submit" value="Add Stock"></input>
+        <input type="submit" value="Add Stock" className="button"></input>
       </form>
-      {message != null && <p className={error ? "error" : ""}>{message}</p>}
+      {message != null && <p className={error ? "text-red-600 text-sm" : ""}>{message}</p>}
     </>
   )
 };

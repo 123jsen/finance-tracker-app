@@ -67,7 +67,7 @@ export default function StocksTable({ stockData, reloadStock }) {
           {tableRows}
         </tbody>
       </table>
-      {lastUpdated && <p> Last Updated at {lastUpdated.toString()} </p>}
+      {lastUpdated && <p className="text-sm text-gray-300"> Last Updated at {lastUpdated.toString()} </p>}
     </>
   )
 };

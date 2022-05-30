@@ -23,7 +23,7 @@ export default function Stocks() {
   };
 
   // update stock prices
-  async function fetchStockPrices (data) {
+  async function fetchStockPrices(data) {
     console.log("Updating Prices")
 
     const requests = [];
@@ -57,10 +57,10 @@ export default function Stocks() {
   }, [])
 
   return (
-    <>
-      <h2>Stocks</h2>
-      <StocksTable stockData={stockData} reloadStock={loadStock}/>
-      <StocksAddform stockData={stockData} reloadStock={loadStock}/>
-    </>
+    <div className="p-1">
+      <h2 className="text-3xl">Stocks</h2>
+      <StocksTable stockData={stockData} reloadStock={loadStock} />
+      <StocksAddform stockData={stockData} reloadStock={loadStock} />
+    </div>
   )
 };

@@ -32,12 +32,12 @@ export default function AccountSettings() {
   }
 
   return (
-    <>
+    <div className="mt-4">
       <h3> Account Settings</h3>
-      <button onClick={clearLogins}>Clear Logins</button>
+      <button onClick={clearLogins} className="button">Clear Logins</button>
       <br></br>
-      <button onClick={deleteAccount}>Delete Account</button>
-    </>
+      <button onClick={deleteAccount} className="button">Delete Account</button>
+    </div>
   )
 
 }
