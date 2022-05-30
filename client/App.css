@@ -8,10 +8,6 @@
   }
 
   .button {
-    @apply py-2 px-4 rounded bg-slate-600;
-  }
-
-  .button:hover {
-    @apply bg-zinc-50 text-black cursor-pointer;
+    @apply py-2 px-4 rounded bg-slate-600 hover:bg-zinc-50 hover:text-black hover:px-8 hover:cursor-pointer transition-all;
   }
 }

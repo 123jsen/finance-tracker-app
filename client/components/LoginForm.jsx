@@ -49,7 +49,7 @@ export default function LoginForm() {
   return (
     <div className="flex justify-center items-center h-screen">
       <form className="bg-gray-800 px-10 py-6 rounded-xl">
-        <h1 className="text-center mb-5 text-2xl">Login</h1>
+        <h1 className="text-center mb-5 text-3xl font-semibold">Login</h1>
         <label>Username:</label>
         <input {...register("name")} type='text' className="form-input"/>
         <br />
