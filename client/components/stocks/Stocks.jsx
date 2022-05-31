@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import LoginContext from '../../context/LoginContext.jsx';
 import StocksTable from './StocksTable.jsx';
 import StocksAddform from './StocksAddform.jsx';
+import StocksBoard from './StocksBoard.jsx';
 
 export default function Stocks() {
 
@@ -59,6 +60,7 @@ export default function Stocks() {
   return (
     <div className="p-1">
       <h2 className="text-3xl">Stocks</h2>
+      <StocksBoard stockData={stockData}/>
       <StocksTable stockData={stockData} reloadStock={loadStock} />
       <StocksAddform stockData={stockData} reloadStock={loadStock} />
     </div>
