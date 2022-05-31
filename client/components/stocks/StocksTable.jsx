@@ -23,13 +23,12 @@ function StockRow({ stock, reloadStock }) {
   }
 
   return (
-    <tr key={stock._id}>
+    <tr key={stock._id} className="my-2 border-2">
       <td>{stock.symbol}</td>
       <td>${stock.buyPrice.toFixed(2)}</td>
       <td>${stock.currentPrice.toFixed(2)}</td>
       <td>${(stock.currentPrice - stock.buyPrice).toFixed(2)}</td>
-      <td>{stock.buyDate}</td>
-      <td><button onClick={deleteStock}>Delete</button></td>
+      <td><button className="rounded bg-slate-700 mx-3 p-1 hover:bg-slate-200" onClick={deleteStock}>Delete</button></td>
     </tr>
   )
 }
@@ -54,12 +53,11 @@ export default function StocksTable({ stockData, reloadStock }) {
     <>
       <table>
         <thead>
-          <tr>
+          <tr className="border-2">
             <th>Stock</th>
             <th>Buy Price</th>
             <th>Current Price</th>
             <th>Net Gain/Loss</th>
-            <th>Buy Date</th>
             <th>Delete</th>
           </tr>
         </thead>
