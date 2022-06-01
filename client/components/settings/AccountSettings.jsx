@@ -21,14 +21,14 @@ export default function AccountSettings() {
 
   const clearLogins = () => {
     console.log('Clear Logins');
-    deleteRequest('http://localhost:3000/user/tokens');
+    deleteRequest(`${process.env.API_BASE_URL}/user/tokens`);
   }
 
   const deleteAccount = () => {
     const confirmDelete = confirm('Are you sure you want to delete your account?');
     if (!confirmDelete) return;
 
-    deleteRequest('http://localhost:3000/user/account');
+    deleteRequest(`${process.env.API_BASE_URL}/user/account`);
   }
 
   return (

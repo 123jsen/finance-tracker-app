@@ -11,7 +11,7 @@ export default function Stocks() {
 
   // fetch stock information from database
   async function loadStock() {
-    const res = await fetch('http://localhost:3000/stock', {
+    const res = await fetch(`${process.env.API_BASE_URL}/stock`, {
       headers: { Authorization: token, name }
     });
 
@@ -30,7 +30,7 @@ export default function Stocks() {
     const requests = [];
     data.forEach((stock) => {
       requests.push(
-        fetch('http://localhost:3000/stock/' + stock.symbol, {
+        fetch(`${process.env.API_BASE_URL}/stock/` + stock.symbol, {
           headers: {
             Authorization: token,
             name

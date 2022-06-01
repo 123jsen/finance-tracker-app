@@ -1,5 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
+require('dotenv').config();
+
+const environmentVariables = ['API_BASE_URL'];
 
 module.exports = {
   entry: './client/index.js',
@@ -11,6 +15,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './client/index.html',
     }),
+    new webpack.EnvironmentPlugin(environmentVariables),
   ],
   resolve: {
     modules: [__dirname, 'client', 'node_modules'],
@@ -34,6 +39,6 @@ module.exports = {
     ],
   },
   devServer: {
-    historyApiFallback: true
-  }
+    historyApiFallback: true,
+  },
 };

@@ -22,7 +22,7 @@ export const LoginProvider = ({ children }) => {
     }
 
     // Fake endpoint that will activate middleware
-    const res = await fetch('http://localhost:3000/auth', {
+    const res = await fetch(`${process.env.API_BASE_URL}/auth`, {
       headers: {
         Authorization: token,
         'Content-Type': 'application/json',

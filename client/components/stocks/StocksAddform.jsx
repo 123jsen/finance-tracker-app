@@ -11,7 +11,7 @@ export default function StocksAddform({reloadStock}) {
   const [error, setError] = useState(false);
 
   const onSubmit = async (data) => {
-    const res = await fetch('http://localhost:3000/stock/' + data.symbol, {
+    const res = await fetch(`${process.env.API_BASE_URL}/stock/` + data.symbol, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -5,7 +5,7 @@ function StockRow({ stock, reloadStock }) {
   const { name, token } = useContext(LoginContext);
 
   const deleteStock = async () => {
-    const res = await fetch('http://localhost:3000/stock/' + stock._id, {
+    const res = await fetch(`${process.env.API_BASE_URL}/stock/` + stock._id, {
       method: 'DELETE',
       headers: {
         Authorization: token,

@@ -39,11 +39,11 @@ export default function LoginForm() {
   }
 
   const handleLogin = async (data) => {
-    await accountHandler(data, 'http://localhost:3000/login/login', 200);
+    await accountHandler(data, `${process.env.API_BASE_URL}/login/login`, 200);
   }
 
   const handleRegister = async (data) => {
-    await accountHandler(data, 'http://localhost:3000/login/create', 201);
+    await accountHandler(data, `${process.env.API_BASE_URL}/login/create`, 201);
   }
 
   return (
