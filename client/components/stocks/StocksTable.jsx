@@ -50,7 +50,7 @@ export default function StocksTable({ stockData, reloadStock }) {
   }, [stockData]);
 
   return (
-    <>
+    <div>
       <table>
         <thead>
           <tr className="border-2">
@@ -66,6 +66,6 @@ export default function StocksTable({ stockData, reloadStock }) {
         </tbody>
       </table>
       {lastUpdated && <p className="text-sm text-gray-300"> Last Updated at {lastUpdated.toString()} </p>}
-    </>
+    </div>
   )
 };

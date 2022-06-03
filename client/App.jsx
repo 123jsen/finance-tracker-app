@@ -39,7 +39,7 @@ export default function App() {
 
 
   return (
-    <div className="h-screen bg-slate-500 text-white text-lg">
+    <div className="h-screen bg-slate-500 text-white text-lg overflow-auto">
       {login ? <Main /> : <NoLogin />}
     </div>
   )

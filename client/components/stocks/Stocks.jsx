@@ -3,6 +3,7 @@ import LoginContext from '../../context/LoginContext.jsx';
 import StocksTable from './StocksTable.jsx';
 import StocksAddform from './StocksAddform.jsx';
 import StocksBoard from './StocksBoard.jsx';
+import StocksOptions from './StocksOptions.jsx';
 
 export default function Stocks() {
 
@@ -58,10 +59,13 @@ export default function Stocks() {
   }, [])
 
   return (
-    <div className="p-1">
+    <div className="p-4">
       <h2 className="text-3xl">Stocks</h2>
-      <StocksBoard stockData={stockData}/>
-      <StocksTable stockData={stockData} reloadStock={loadStock} />
+      <StocksBoard stockData={stockData} />
+      <div className="flex justify-between">
+        <StocksTable stockData={stockData} reloadStock={loadStock} />
+        <StocksOptions />
+      </div>
       <StocksAddform stockData={stockData} reloadStock={loadStock} />
     </div>
   )
