@@ -9,6 +9,7 @@ export default function Stocks() {
 
   const { name, token } = useContext(LoginContext);
   const [stockData, setStockData] = useState([]);
+  const [selectStock, setSelectStock] = useState();
 
   // fetch stock information from database
   async function loadStock() {
@@ -63,8 +64,8 @@ export default function Stocks() {
       <h2 className="text-3xl">Stocks</h2>
       <StocksBoard stockData={stockData} />
       <div className="flex justify-between">
-        <StocksTable stockData={stockData} reloadStock={loadStock} />
-        <StocksOptions />
+        <StocksTable stockData={stockData} reloadStock={loadStock} setSelectStock={setSelectStock} />
+        {selectStock == null ? <></> : <StocksOptions selectStock={selectStock}/>}
       </div>
       <StocksAddform stockData={stockData} reloadStock={loadStock} />
     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import LoginContext from '../../context/LoginContext.jsx';
 
-function StockRow({ stock, reloadStock }) {
+function StockRow({ stock, reloadStock, setSelectStock }) {
   const { name, token } = useContext(LoginContext);
 
   const deleteStock = async () => {
@@ -22,18 +22,23 @@ function StockRow({ stock, reloadStock }) {
     reloadStock();
   }
 
+  const selectStock = () => {
+    setSelectStock(stock);
+  }
+
   return (
     <tr key={stock._id} className="my-2 border-2">
       <td>{stock.symbol}</td>
       <td>${stock.buyPrice.toFixed(2)}</td>
       <td>${stock.currentPrice.toFixed(2)}</td>
       <td>${(stock.currentPrice - stock.buyPrice).toFixed(2)}</td>
+      <td><button className="rounded bg-slate-700 mx-3 p-1 hover:bg-slate-200" onClick={selectStock}>Select</button></td>
       <td><button className="rounded bg-slate-700 mx-3 p-1 hover:bg-slate-200" onClick={deleteStock}>Delete</button></td>
     </tr>
   )
 }
 
-export default function StocksTable({ stockData, reloadStock }) {
+export default function StocksTable({ stockData, reloadStock, setSelectStock }) {
   const [lastUpdated, setLastUpdated] = useState();
 
   let tableRows = stockData.map((stock) => {
@@ -42,7 +47,7 @@ export default function StocksTable({ stockData, reloadStock }) {
       return;
     }
     else
-      return <StockRow stock={stock} reloadStock={reloadStock} />
+      return <StockRow stock={stock} reloadStock={reloadStock} setSelectStock={setSelectStock}/>
   });;
 
   useEffect(() => {
@@ -58,6 +63,7 @@ export default function StocksTable({ stockData, reloadStock }) {
             <th>Buy Price</th>
             <th>Current Price</th>
             <th>Net Gain/Loss</th>
+            <th>Select</th>
             <th>Delete</th>
           </tr>
         </thead>
